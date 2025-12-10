@@ -4,15 +4,15 @@ import {
   createSelector,
 } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, useStore } from "react-redux";
-import { playlistsApi } from "@/features/playlists/api/playlistsApi";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { baseApi } from "@/app/api/baseApi";
 
-export const rootReducer = combineSlices(playlistsApi);
+export const rootReducer = combineSlices(baseApi);
 
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(playlistsApi.middleware),
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
 setupListeners(store.dispatch);
