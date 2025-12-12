@@ -30,6 +30,8 @@ export const PlaylistsPage = () => {
     setCurrentPage(1);
   };
 
+  if (isLoading) return <h1>Loading...</h1>;
+
   return (
     <div className={s.container}>
       <h1>Playlists page</h1>
