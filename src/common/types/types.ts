@@ -26,3 +26,8 @@ export type PlaylistMeta = {
   totalCount: number;
   pagesCount: number;
 };
+
+export type MeResponse = {
+  userId: string;
+  login: string;
+};

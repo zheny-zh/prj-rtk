@@ -1,4 +1,4 @@
-import type { PlaylistAttributes } from "@/features/playlists/api/playlistsApi.types";
+import type { PlaylistAttributes } from "@/features/playlists/api/playlists-api.types";
 
 type Props = {
   attributes: PlaylistAttributes;

@@ -3,8 +3,8 @@ import {
   type UseFormHandleSubmit,
   type UseFormRegister,
 } from "react-hook-form";
-import type { UpdatePlaylistArgs } from "@/features/playlists/api/playlistsApi.types";
-import { useUpdatePlaylistsMutation } from "@/features/playlists/api/playlistsApi";
+import type { UpdatePlaylistArgs } from "@/features/playlists/api/playlists-api.types";
+import { useUpdatePlaylistsMutation } from "@/features/playlists/api/playlists-api";
 
 type Props = {
   playlistId: string;

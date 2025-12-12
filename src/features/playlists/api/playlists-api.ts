@@ -4,7 +4,7 @@ import type {
   PlaylistData,
   PlaylistsResponse,
   UpdatePlaylistArgs,
-} from "@/features/playlists/api/playlistsApi.types";
+} from "@/features/playlists/api/playlists-api.types";
 import { baseApi, Tags } from "@/app/api";
 import type { Images } from "@/common/types";
 

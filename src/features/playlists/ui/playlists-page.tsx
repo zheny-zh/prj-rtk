@@ -1,5 +1,5 @@
 import { type ChangeEvent, useState } from "react";
-import { useFetchPlaylistsQuery } from "@/features/playlists/api/playlistsApi";
+import { useFetchPlaylistsQuery } from "@/features/playlists/api/playlists-api";
 import { useDebounceValue } from "@/common/hooks";
 import { Pagination } from "@/common/pagination";
 import { PlaylistsList } from "@/features/playlists/ui/playlists-list/playlists-list";

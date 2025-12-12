@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import type {
   PlaylistData,
   UpdatePlaylistArgs,
-} from "@/features/playlists/api/playlistsApi.types";
+} from "@/features/playlists/api/playlists-api.types";
 import { useState } from "react";
-import { useDeletePlaylistsMutation } from "@/features/playlists/api/playlistsApi";
+import { useDeletePlaylistsMutation } from "@/features/playlists/api/playlists-api";
 import s from "./playlists-list.module.css";
 
 type Props = {

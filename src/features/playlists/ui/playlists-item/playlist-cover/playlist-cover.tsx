@@ -3,7 +3,7 @@ import defaultCover from "@/app/assets/img/default-playlist-cover.png";
 import {
   useDeletePlaylistCoverMutation,
   useUploadPlaylistCoverMutation,
-} from "@/features/playlists/api/playlistsApi";
+} from "@/features/playlists/api/playlists-api";
 import s from "./playlist-cover.module.css";
 import type { Images } from "@/common/types";
 import { toast } from "react-toastify";
