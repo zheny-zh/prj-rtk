@@ -5,7 +5,6 @@ import { Pagination } from "@/common/pagination";
 import { PlaylistsList } from "@/features/playlists/ui/playlists-list/playlists-list";
 import { CreatePlaylistForm } from "@/features/playlists/ui/create-playlist-form/create-playlist-form";
 import s from "./playlists-page.module.css";
-import { toast } from "react-toastify";
 
 export const PlaylistsPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -15,7 +14,7 @@ export const PlaylistsPage = () => {
 
   const debounceSearch = useDebounceValue(search);
 
-  const { data, isLoading, error } = useFetchPlaylistsQuery({
+  const { data, isLoading } = useFetchPlaylistsQuery({
     search: debounceSearch,
     pageNumber: currentPage,
     pageSize,
@@ -30,21 +29,6 @@ export const PlaylistsPage = () => {
     setSearch(e.currentTarget.value);
     setCurrentPage(1);
   };
-
-  if (error) {
-    if ("status" in error) {
-      const errMsg =
-        "error" in error
-          ? error.error
-          : (error.data as { error: string }).error ||
-            (error.data as { message: string }).message ||
-            "Ошибка";
-      toast(errMsg, { type: "error" });
-    } else {
-      const errMsg = error.message || "Ошибка";
-      toast(errMsg, { type: "error" });
-    }
-  }
 
   if (isLoading) return <h1>Loading...</h1>;
 
