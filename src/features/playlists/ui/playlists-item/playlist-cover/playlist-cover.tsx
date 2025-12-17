@@ -6,7 +6,7 @@ import {
 } from "@/features/playlists/api/playlists-api";
 import s from "./playlist-cover.module.css";
 import type { Images } from "@/common/types";
-import { toast } from "react-toastify";
+import { errorToast } from "@/common/utils";
 
 type Props = {
   playlistId: string;
@@ -25,14 +25,13 @@ export const PlaylistCover = ({ playlistId, images }: Props) => {
     if (!file) return;
 
     if (!allowedTypes.includes(file.type)) {
-      toast("Неверный формат", { type: "error" });
+      errorToast("Неверный формат");
       return;
     }
 
     if (file.size > maxSize) {
-      toast(
+      errorToast(
         `Файл превышает допустимый размер ${Math.round(maxSize / 1024)} KB`,
-        { type: "error" },
       );
     }
 
