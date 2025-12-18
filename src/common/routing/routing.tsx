@@ -5,6 +5,7 @@ import { TracksPage } from "@/features/tracks/ui/tracks-page";
 import { ProfilePage } from "@/features/auth/ui/profile-page/profile-page";
 import { PageNotFound } from "@/common/components";
 import { Path } from "@/common/routing/path";
+import { OauthCallback } from "@/features/auth/ui/oauth-callback/oauth-callback";
 
 export const Routing = () => (
   <Routes>
@@ -12,6 +13,7 @@ export const Routing = () => (
     <Route path={Path.Playlists} element={<PlaylistsPage />} />
     <Route path={Path.Tracks} element={<TracksPage />} />
     <Route path={Path.Profile} element={<ProfilePage />} />
+    <Route path={Path.OAuthRedirect} element={<OauthCallback />} />
     <Route path={Path.NotFound} element={<PageNotFound />} />
   </Routes>
 );

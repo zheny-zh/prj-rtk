@@ -1,8 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { handleErrors } from "@/common/utils/handle-errors";
+import { AUTH_KEYS } from "@/common/constants";
 
 export const Tags = {
   playlist: "Playlist",
+  auth: "Auth",
 } as const;
 
 export const baseApi = createApi({
@@ -17,10 +19,11 @@ export const baseApi = createApi({
         "API-KEY": import.meta.env.VITE_API_KEY,
       },
       prepareHeaders: (headers) => {
-        headers.set(
-          "Authorization",
-          `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
-        );
+        const accessToken = localStorage.getItem(AUTH_KEYS.accessToken);
+        if (accessToken) {
+          headers.set("Authorization", `Bearer ${accessToken}`);
+        }
+
         return headers;
       },
     })(args, api, extraOptions);
