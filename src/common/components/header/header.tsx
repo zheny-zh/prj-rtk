@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import s from "./header.module.css";
 import { Path } from "@/common/routing/path";
-import { useGetMeQuery } from "@/features/auth/api/auth-api";
+import { useGetMeQuery, useLogoutMutation } from "@/features/auth/api/auth-api";
 import { Login } from "@/features/auth/ui/login/login";
 
 const navItems = [
@@ -13,6 +13,7 @@ const navItems = [
 
 export const Header = () => {
   const { data } = useGetMeQuery();
+  const [logout] = useLogoutMutation();
 
   return (
     <header className={s.container}>
@@ -32,7 +33,12 @@ export const Header = () => {
           ))}
         </ul>
       </nav>
-      {data && data.login}
+      {data && (
+        <div className={s.loginContainer}>
+          <p>{data.login}</p>
+          <button onClick={() => logout()}>logout</button>
+        </div>
+      )}
       {!data && <Login />}
     </header>
   );

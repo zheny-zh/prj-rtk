@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { baseApi } from "@/app/api/baseApi";
+import { baseApi } from "@/app/api/base-api";
 
 export const rootReducer = combineSlices(baseApi);
 

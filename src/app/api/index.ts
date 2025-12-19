@@ -1,1 +1,2 @@
-export { Tags, baseApi } from "./baseApi";
+export { Tags, baseApi } from "./base-api";
+export { baseQuery } from "./base-query";
