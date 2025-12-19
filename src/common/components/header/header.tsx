@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import s from "./header.module.css";
 import { Path } from "@/common/routing/path";
 import { useGetMeQuery, useLogoutMutation } from "@/features/auth/api/auth-api";
@@ -8,11 +8,10 @@ const navItems = [
   { to: Path.Main, label: "Main" },
   { to: Path.Playlists, label: "Playlists" },
   { to: Path.Tracks, label: "Tracks" },
-  { to: Path.Profile, label: "Profile" },
 ];
 
 export const Header = () => {
-  const { data } = useGetMeQuery();
+  const { data, isLoading } = useGetMeQuery();
   const [logout] = useLogoutMutation();
 
   return (
@@ -33,13 +32,18 @@ export const Header = () => {
           ))}
         </ul>
       </nav>
-      {data && (
-        <div className={s.loginContainer}>
-          <p>{data.login}</p>
-          <button onClick={() => logout()}>logout</button>
-        </div>
-      )}
-      {!data && <Login />}
+
+      <div className={s.loginContainer}>
+        {isLoading && <div>Загружаем...</div>}
+        {data && (
+          <>
+            <Link to={Path.Profile}>{data.login}</Link>
+            <button onClick={() => logout()}>logout</button>
+          </>
+        )}
+      </div>
+
+      {!data && !isLoading && <Login />}
     </header>
   );
 };
