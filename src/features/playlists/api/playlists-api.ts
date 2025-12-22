@@ -1,6 +1,8 @@
 import type {
   CreatePlaylistArgs,
   FetchPlaylistsArgs,
+  PlaylistCreatedEvent,
+  PlaylistUpdatedEvent,
   UpdatePlaylistArgs,
 } from "@/features/playlists/api/playlists-api.types";
 import { baseApi, Tags } from "@/app/api";
@@ -10,6 +12,8 @@ import {
 } from "@/features/playlists/model/playlists.schemas";
 import { withZodCatch } from "@/common/utils";
 import { imagesSchema } from "@/common/schemas";
+import { SOCKET_EVENTS } from "@/common/constants";
+import { subscribeToEvent } from "@/common/socket";
 
 export const playlistsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -18,8 +22,52 @@ export const playlistsApi = baseApi.injectEndpoints({
         url: `playlists`,
         params,
       }),
+      keepUnusedDataFor: 0,
       ...withZodCatch(playlistsResponseSchema),
       providesTags: [Tags.playlist],
+      onCacheEntryAdded: async (
+        _,
+        { cacheDataLoaded, updateCachedData, cacheEntryRemoved },
+      ) => {
+        await cacheDataLoaded;
+
+        const unsubscribes = [
+          subscribeToEvent<PlaylistCreatedEvent>(
+            SOCKET_EVENTS.PLAYLIST_CREATED,
+            (msg) => {
+              const newPlaylist = msg.payload.data;
+              updateCachedData((state) => {
+                state.data.pop();
+                state.data.unshift(newPlaylist);
+                state.meta.totalCount += 1;
+                state.meta.pagesCount = Math.ceil(
+                  state.meta.totalCount / state.meta.pageSize,
+                );
+
+                // 2 вариант
+                // dispatch(playlistsApi.util.invalidateTags([Tags.playlist]))
+              });
+            },
+          ),
+          subscribeToEvent<PlaylistUpdatedEvent>(
+            SOCKET_EVENTS.PLAYLIST_UPDATED,
+            (msg) => {
+              const newPlaylist = msg.payload.data;
+              updateCachedData((state) => {
+                const index = state.data.findIndex(
+                  (playlist) => playlist.id === newPlaylist.id,
+                );
+                if (index !== -1) {
+                  state.data[index] = { ...state.data[index], ...newPlaylist };
+                }
+              });
+            },
+          ),
+        ];
+
+        await cacheEntryRemoved;
+        unsubscribes.forEach((unsubscribe) => unsubscribe());
+      },
     }),
     createPlaylists: build.mutation({
       query: (body: CreatePlaylistArgs) => ({
