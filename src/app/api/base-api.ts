@@ -10,6 +10,7 @@ export const baseApi = createApi({
   reducerPath: "baseApi",
   tagTypes: Object.values(Tags),
   baseQuery: baseQueryWithReauth,
-
   endpoints: () => ({}),
+  //@ts-ignore
+  skipSchemaValidation: process.env.NODE_ENV === "production",
 });

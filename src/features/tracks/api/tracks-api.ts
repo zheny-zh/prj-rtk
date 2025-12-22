@@ -1,5 +1,7 @@
 import { baseApi } from "@/app/api";
 import type { FetchTracksResponse } from "@/features/tracks/api/tracks-api.types";
+import { withZodCatch } from "@/common/utils";
+import { fetchTracksResponseSchema } from "@/features/tracks/model/tracks.schemas";
 
 export const tracksApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -21,6 +23,7 @@ export const tracksApi = baseApi.injectEndpoints({
           paginationType: "offset",
         },
       }),
+      ...withZodCatch(fetchTracksResponseSchema),
     }),
   }),
 });

@@ -1,7 +1,12 @@
-export type LoginResponse = {
-  refreshToken: string;
-  accessToken: string;
-};
+import * as z from "zod";
+import {
+  loginResponseSchema,
+  type meResponseSchemas,
+} from "@/features/auth/model/auth.shemas";
+
+export type MeResponse = z.infer<typeof meResponseSchemas>;
+
+export type LoginResponse = z.infer<typeof loginResponseSchema>;
 
 // Arguments
 export type LoginArgs = {
